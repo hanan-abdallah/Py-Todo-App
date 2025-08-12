@@ -2,7 +2,8 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: Default
+
 
 steps:
 - task: UsePythonVersion@0
@@ -11,5 +12,9 @@ steps:
     addToPath: true
 
 - script: |
-    python user_input.py
-  displayName: 'Run user_input.py'
+    python todo.py
+  displayName: 'Run todo.py'
+
+- script: echo "Hello from Hanan's agent!"
+  displayName: 'Run a test script'
+  

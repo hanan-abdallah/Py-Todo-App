@@ -1,18 +1,34 @@
+from flask import flask
+app = Flask(__name__)
+
 tasks = []
 
-def show_menu():
-    print("\n--- TO-DO APP ---")
-    print("1. View tasks")
-    print("2. Add task")
-    print("3. Remove task")
-    print("4. Exit")
+@app.route('/tasks', methods=['GET'])
+def get_tasks():
+    return jsonify(tasks)
+
+@app.route('/tasks', methods=['POST'])
+def add_task():
+    task = request.json.get('task')
+    tasks.append(task)
+    return jsonify({"message": "Task added!"}), 201
+
+@app.route('/tasks/<int:task_id>', methods=['DELETE'])
+def remove_task(task_id):
+    try:
+        removed = tasks.pop(task_id)
+        return jsonify({"message": f"Removed: {removed}"})
+    except IndexError:
+        return jsonify({"error": "Invalid task ID."}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 def view_tasks():
     if not tasks:
-        print("No tasks yet.")
+        return jsonify({"message": "No tasks yet."})
     else:
-        for i, task in enumerate(tasks, 1):
-            print(f"{i}. {task}")
+        return jsonify({"tasks": tasks})
 
 def add_task():
     task = input("Enter a new task: ")

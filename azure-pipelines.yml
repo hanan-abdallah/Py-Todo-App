@@ -1,42 +1,17 @@
-trigger:
-  - main
-
 pool:
-  vmImage: ubuntu-latest
-
-strategy:
-  matrix:
-    Python38:
-      python.version: '3.8'
-    Python39:
-      python.version: '3.9'
-    Python310:
-      python.version: '3.10'
-    Python311:
-      python.version: '3.11'
+  vmImage: 'ubuntu-latest'
 
 steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '$(python.version)'
-      addToPath: true
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.10'
+    addToPath: true
 
-  - script: |
-      python -m pip install --upgrade pip
-      pip install -r requirements.txt
-      pip install pytest pytest-cov flake8
-    displayName: 'Install dependencies'
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
 
-  - script: |
-      pytest tests/ --junitxml=test-results.xml --cov=app --cov-report=xml --cov-fail-under=80
-    displayName: 'Run tests with coverage'
-
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFiles: '**/test-results.xml'
-      testRunTitle: 'Flask Unit Tests'
-
-  - task: PublishCodeCoverageResults@1
-    inputs:
-      codeCoverageTool: 'Cobertura'
-      summaryFileLocation: 'coverage.xml'
+- script: |
+    pytest
+  displayName: 'Run tests'

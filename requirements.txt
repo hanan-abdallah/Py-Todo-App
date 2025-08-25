@@ -1,3 +1,5 @@
-Flask==2.3.2
+Flask-cors==2.3.2
 gunicorn==21.2.0
 requests==2.31.0
+pytest==7.4.0
+pytest-cov==4.1.0

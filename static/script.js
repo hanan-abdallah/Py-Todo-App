@@ -16,7 +16,7 @@ async function addTask() {
     await fetch('/tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ task: input.value })
+        body: JSON.stringify({ task: task })
     });
     input.value = '';
     fetchTasks();

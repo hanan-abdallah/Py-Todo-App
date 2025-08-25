@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Test To-do App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test To-do App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Learning Schedule</h1>
-    <input type="text" id="taskInput" placeholder="New task">
-    <button onclick="addTask()">Add</button>
-    <ul id="taskList"></ul>
+  <h1>Learning Schedule</h1>
+  <input type="text" id="taskInput" placeholder="New task">
+  <button onclick="addTask()">Add</button>
+  <ul id="taskList"></ul>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script src="script.js"></script>
 </body>
 </html>

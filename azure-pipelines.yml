@@ -6,6 +6,7 @@ steps:
   inputs:
     versionSpec: '3.10'
     addToPath: true
+  displayName: 'Set Python Version'
 
 - script: |
     python -m pip install --upgrade pip
@@ -13,5 +14,19 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    pytest
-  displayName: 'Run tests'
+    pytest --cov=app --cov-report=xml --junitxml=test-results.xml
+  displayName: 'Run tests with coverage'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: 'coverage.xml'
+    pathToSources: '$(Build.SourcesDirectory)'
+    failIfCoverageEmpty: true
+  displayName: 'Publish Code Coverage Results'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: '**/test-results.xml'
+    testRunTitle: 'Pytest Results'
+  displayName: 'Publish Test Results'
